@@ -1,21 +1,23 @@
-// ✅ Importación estándar (Node buscará en node_modules automáticamente)
-import pkg from '@prisma/client';
-const { PrismaClient } = pkg;
+// import pkg from '@prisma/client';
+// const { PrismaClient } = pkg;
 
-// Configuración del Adaptador (Correcto para Prisma 7 + PostgreSQL)
-import { PrismaPg } from '@prisma/adapter-pg';
-import pkgPg from 'pg';
-const { Pool } = pkgPg;
-import 'dotenv/config';
+// // Configuración del Adaptador (Correcto para Prisma 7 + PostgreSQL)
+// import { PrismaPg } from '@prisma/adapter-pg';
+// import pkgPg from 'pg';
+// const { Pool } = pkgPg;
+// import 'dotenv/config';
 
-// 1. Conexión física
-const pool = new Pool({ connectionString: process.env.DATABASE_URL });
+// // 1. Conexión física
+// const pool = new Pool({ connectionString: process.env.DATABASE_URL });
 
-// 2. Adaptador
-const adapter = new PrismaPg(pool);
+// // 2. Adaptador
+// const adapter = new PrismaPg(pool);
 
-// 3. Cliente con adaptador
-const prisma = new PrismaClient({ adapter });
+// // 3. Cliente con adaptador
+// const prisma = new PrismaClient({ adapter });
+
+
+import prisma from './db.js'
 
 export const registrarUsuario = async (nombre, email, password) => {
     // Importación dinámica para bcrypt (truco para evitar conflictos ESM/CJS)

@@ -1,7 +1,9 @@
-import pkg from '@prisma/client';
-const { PrismaClient } = pkg;
+// import pkg from '@prisma/client';
+// const { PrismaClient } = pkg;
 
-const prisma = new PrismaClient()
+// const prisma = new PrismaClient()
+
+import prisma from "./db.js";
 
 export const crearProducto = async (data) =>{
     return await prisma.producto.create({
