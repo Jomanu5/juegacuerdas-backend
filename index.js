@@ -35,6 +35,7 @@ app.post ('/api-tienda/auth/register', async (req, res) => {
         await registrarUsuario (nombre, email, password);
         res.status (201).json ({message: 'Usuario registrado exitosamente'});
     } catch (error) {
+        console.error(error)
         res.status(500).send ( 'Error al registrar el usuario');
         
     }
@@ -58,6 +59,7 @@ app.post ('/api-tienda/auth/login', async (req, res) => {
         res.json ({token});
         
     } catch (error) {
+        console.error(error)
         res.status (500).send ('Error en el proceso de login');
         
     }
@@ -77,6 +79,7 @@ app.get('/api-tienda/usuarios/perfil', validarToken, async (req,res)=>{
 
         res.json(datosPublicos)
     } catch (error) {
+        console.error(error)
         res.status(500).json({error:'error al obtener datos de perfil'})
         
     }
@@ -98,6 +101,7 @@ app.get('/api-tienda/usuarios', validarToken, esAdmin, async (req,res)=>{
 
         
     } catch (error) {
+        console.error(error)
         res.status(500).json({error: 'error al obtener la lista de usuarios'})
     }
 })
@@ -121,6 +125,7 @@ app.post('/api-tienda/productos', validarToken, esAdmin, async (req, res) => {
         const nuevoProducto = await crearProducto(req.body);
         res.status(201).json(nuevoProducto);
     } catch (error) {
+        console.error(error)
         res.status(500).json({ error: 'Error al crear el producto' });
     }
 });
@@ -131,6 +136,7 @@ app.delete('/api-tienda/productos/:id', validarToken, esAdmin, async (req, res) 
         await eliminarProducto(id);
         res.json({ message: 'Producto eliminado correctamente' });
     } catch (error) {
+        console.error(error)
         res.status(500).json({ error: 'No se pudo eliminar el producto' });
     }
 });
