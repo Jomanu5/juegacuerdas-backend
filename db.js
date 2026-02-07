@@ -1,17 +1,15 @@
 // db.js
 import { PrismaClient } from '@prisma/client';
 import { PrismaPg } from '@prisma/adapter-pg';
-import { pg } from 'pg'
+import pkg from 'pg'; // 1. Importamos el paquete completo como 'pkg'
 
-const pool = new pg.Pool({connectinString: process.env.DATABASE_URL})
-const adapter = new PrismaPg(pool)  
+const { Pool } = pkg; // 2. Desestructuramos 'Pool' desde el paquete
 
+// 3. Configuración de la conexión
+const connectionString = `${process.env.DATABASE_URL}`;
 
-const prisma = new PrismaClient();
-
-// 🔍 Agregamos un log de depuración (solo se verá en Render)
-if (!process.env.DATABASE_URL) {
-  console.error("⚠️ ALERTA: La variable DATABASE_URL no se detecta en el sistema.");
-}
+const pool = new Pool({ connectionString });
+const adapter = new PrismaPg(pool);
+const prisma = new PrismaClient({ adapter });
 
 export default prisma;
