@@ -29,7 +29,7 @@ app.use(registrarActividad)
 
 
 //REGISTRO. Usuario 1 = admin.
-app.post ('/api-tienda/auth/', async (req, res) => {
+app.post ('/api-tienda/auth/register', async (req, res) => {
     try {
         const {nombre, email, password} = req.body;
         await registrarUsuario (nombre, email, password);
