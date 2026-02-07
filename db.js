@@ -1,7 +1,12 @@
 // db.js
 import { PrismaClient } from '@prisma/client';
+import { PrismaPg } from '@prisma/adapter-pg';
+import { pg } from 'pg'
 
-// En Prisma 7, el constructor debe ir vacío si la URL está en el sistema.
+const pool = new pg.Pool({connectinString: process.env.DATABASE_URL})
+const adapter = new PrismaPg(pool)  
+
+
 const prisma = new PrismaClient();
 
 // 🔍 Agregamos un log de depuración (solo se verá en Render)

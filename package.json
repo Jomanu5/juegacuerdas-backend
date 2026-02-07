@@ -7,7 +7,6 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node index.js",
     "postinstall": "prisma generate"
-  
   },
   "keywords": [],
   "author": "",
@@ -23,7 +22,8 @@
     "jsonwebtoken": "^9.0.3",
     "jwt-decoder": "^0.0.0",
     "node": "^25.6.0",
-    "pg": "^8.18.0"
+    "pg": "^8.18.0",
+    "postgresql": "^0.0.1"
   },
   "devDependencies": {
     "prisma": "^7.3.0"
