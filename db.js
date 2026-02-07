@@ -8,6 +8,10 @@ const { Pool } = pkg; // 2. Desestructuramos 'Pool' desde el paquete
 // 3. Configuración de la conexión
 const connectionString = `${process.env.DATABASE_URL}`;
 
+if (!connectionString) {
+    console.error ("ERROR: database URL no encontrada")
+}
+
 const pool = new Pool({ connectionString });
 const adapter = new PrismaPg(pool);
 const prisma = new PrismaClient({ adapter });
