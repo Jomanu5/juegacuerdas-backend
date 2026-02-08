@@ -29,7 +29,6 @@ export const registrarUsuario = async (nombre, email, password) => {
             nombre,
             email,
             password: passwordEncriptada,
-            rol: "ADMIN"
         }
     });
 };
