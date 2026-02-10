@@ -14,7 +14,9 @@ import {
     crearProducto, 
     obtenerProductos, 
     actualizarProducto, 
-    eliminarProducto 
+    eliminarProducto, 
+    obtenerProductosPorId,
+    obtenerProductosPorFiltros
 } from './productosConsultas.js';
 
 
@@ -113,11 +115,49 @@ app.get('/api-tienda/usuarios', validarToken, esAdmin, async (req,res)=>{
 
 app.get('/api-tienda/productos', async (req, res) => {
     try {
-        const productos = await obtenerProductos();
-        res.json(productos);
+        console.log("📥 Parámetros recibidos desde el front:", req.query);
+
+        const { categoria, precioMax, ordenPrecio, page } = req.query;
+        
+        const resultado = await obtenerProductosPorFiltros({
+            categoria,
+            precioMax,
+            ordenPrecio
+        });
+
+        res.json({
+            productos: resultado,
+            totalProducts: resultado.length,
+            totalPages: 1,
+            paginaActual: parseInt(page) || 1
+        });
+
     } catch (error) {
+        console.error("Error en Santiago:", error);
         res.status(500).json({ error: 'Error al obtener el catálogo' });
     }
+});
+
+
+app.get ('/api-tienda/productos/:id', async (req,res) => {
+    const {id} = req.params;
+    console.log(`🎻 Petición recibida para el producto ID: ${id}`)
+    try {
+        const producto = await obtenerProductosPorId(id);
+        console.log("Instrumento encontrado:", producto); // Log de resultado
+
+        if (!producto){
+            return res.status(404).json({
+                error:"el producto no existe"
+            })
+        }
+        res.json(producto);
+    } catch (error) {
+    console.error("Error al buscar producto:", error);
+    res.status(500).json({ 
+      error: "Error interno del servidor al procesar la búsqueda." 
+    });
+  }
 });
 
 app.post('/api-tienda/productos', validarToken, esAdmin, async (req, res) => {
@@ -140,6 +180,8 @@ app.delete('/api-tienda/productos/:id', validarToken, esAdmin, async (req, res) 
         res.status(500).json({ error: 'No se pudo eliminar el producto' });
     }
 });
+
+
 
 
 // LEVANTAR EL SERVIDOR
