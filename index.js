@@ -115,7 +115,7 @@ app.get('/api-tienda/usuarios', validarToken, esAdmin, async (req,res)=>{
 
 app.get('/api-tienda/productos', async (req, res) => {
     try {
-        console.log("📥 Parámetros recibidos desde el front:", req.query);
+        console.log("Parámetros recibidos desde el front:", req.query);
 
         const { categoria, precioMax, ordenPrecio, page } = req.query;
         
@@ -181,6 +181,19 @@ app.delete('/api-tienda/productos/:id', validarToken, esAdmin, async (req, res) 
     }
 });
 
+app.put ('/api-tienda/productos/:id', validarToken, esAdmin, async (req,res) =>{
+    try {
+        const {id} = req.params
+        const datosActualizados = req.body
+
+        const productoEditado = await actualizarProducto (id, datosActualizados)
+        res.json (productoEditado)
+        
+    } catch (error) {
+        console.error(error)
+        res.status(500).json ({error: 'No se pudo actualizar'})
+    }
+})
 
 
 

@@ -10,9 +10,10 @@ export const crearProducto = async (data) =>{
         data:{
             nombre: data.nombre,
             descripcion: data.descripcion,
-            precio: data.precio,
+            precio: parseInt(data.precio),
             categoria: data.categoria,
-            imagenUrl: data.imagenUrl
+            imagenUrl: data.imagenUrl,
+            stock: parseInt(data.stock)||0
         }
     })
 }
